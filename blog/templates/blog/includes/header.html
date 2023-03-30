@@ -3,23 +3,26 @@
 
 <div class="header-wrapper">
   <header>
-  <div class="logo-search-form">
-    <div class="logo">
-      <a href="{% url "blog:index" %}"><img src="{% static "blog/img/logo.png" %}" alt="logo"></a>
+    <div class="logo-search-form">
+      <div class="logo">
+        <a href="{% url "blog:index" %}"><img src="{% static "blog/img/logo.png" %}" alt="logo"></a>
+      </div>
+      <div class="search_from">
+        {% search_form %}
+      </div>
     </div>
-    <div class="search_from">
-      {% search_form %}
-    </div>
-  </div>
-  <nav>
-    <ul>
-      <li>User: {{ user.username }}</li>
-      <li><a href="#">Saved posts</a></li>
-      <li><a href="#">Create post</a></li>
-      <li><a href="#">Logout</a></li>
-      <li><a href="#">Login</a></li>
-    </ul>
-  </nav>
-</header>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+          <li>User: {{ user.username }}</li>
+          <li><a href="#">Saved posts</a></li>
+          <li><a href="#">Create post</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
 </div>
 
