@@ -1,8 +1,8 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.shortcuts import render, redirect
 
-from blog.forms import UserRegisterForm
-from blog.models import Post
+from blog.forms import UserRegisterForm, CommentForm
+from blog.models import Post, Comment
 
 
 def index(request):
@@ -22,7 +22,12 @@ def search_list_view(request):
 
 
 def registration_view(request):
-    if request.method == "POST":
+    if request.method == "GET":
+        register_form = UserRegisterForm()
+        context = {"register_form": register_form}
+        return render(request, "blog/registration.html", context=context)
+
+    elif request.method == "POST":
         register_form = UserRegisterForm(request.POST)
 
         if register_form.is_valid():
@@ -30,14 +35,31 @@ def registration_view(request):
             login(request, user)
             return redirect("blog:index")
 
-    register_form = UserRegisterForm()
-    context = {"register_form": register_form}
-
-    return render(request, "blog/registration.html", context=context)
+        context = {"register_form": register_form}
+        return render(request, "blog/registration.html", context=context)
 
 
 def post_detail_view(request, post):
     post = Post.objects.get(slug=post)
-    context = {"post": post}
 
-    return render(request, "blog/post_detail.html", context=context)
+    if request.method == "GET":
+        comments = post.comments.filter(active=True)
+        total_comments = comments.count()
+        context = {
+            "post": post,
+            "form": CommentForm(),
+            "comments": comments,
+            "total_comments": total_comments
+        }
+        return render(request, "blog/post_detail.html", context=context)
+
+    elif request.method == "POST":
+        form = CommentForm(request.POST)
+        user = get_user_model().objects.get(id=request.user.id)
+
+        if form.is_valid():
+            Comment.objects.create(**form.cleaned_data, author=user, post=post)
+            return redirect(request.META.get('HTTP_REFERER', ''))
+
+        context = {"form": form}
+        return render(request, "blog/post_detail.html", context=context)

@@ -1,11 +1,31 @@
 {% extends "blog/base.html" %}
+{% load post_tags %}
 
 {% block content %}
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
+
       <h1>{{ post.title }}</h1>
       <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
       <p>{{ post.body }}</p>
+
+      {{ total_comments }} Comments
+
+      {% if user.is_authenticated %}
+        {% include "blog/inclusions/comment_form.html" %}
+      {% else %}
+        <p>Only authorized users can leave comments!</p>
+      {% endif %}
+
+      {% for comment in comments %}
+        <p>{{ comment.body }}</p>
+        <p>Comment by {{ comment.author.username }}, {{ comment.created }}</p>
+        <hr>
+      {% empty %}
+        <p>There are no comments yet!</p>
+        <hr>
+      {% endfor %}
+
     </div>
     {% include "blog/includes/sidebar.html" %}
   </div>

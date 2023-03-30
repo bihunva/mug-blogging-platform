@@ -3,7 +3,7 @@
 {% block content %}
 
   <h1><a href="{% url 'login' %}">Login</a> | Registration</h1>
-  <form method="POST">
+  <form method="POST" novalidate>
     {% csrf_token %}
     {{ register_form.as_p }}
     <button type="submit">Register</button>
