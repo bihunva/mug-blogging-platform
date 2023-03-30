@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+  <h1>Your saved posts</h1>
+
+  {% for saved_post in saved_posts.all %}
+    <h3><a href="{% url 'blog:post-detail' post=saved_post.slug %}">{{ saved_post.title }}</a></h3>
+    <p><i>Written by {{ saved_post.author.username }}, {{ saved_post.created }}</i></p>
+    <p>{{ saved_post.body|truncatewords:30 }}</p>
+    <hr><br>
+  {% empty %}
+    <p>You don't have any saved posts yet!</p>
+  {% endfor %}
+
+{% endblock %}

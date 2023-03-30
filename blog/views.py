@@ -90,11 +90,10 @@ def post_create_view(request):
         return render(request, "blog/post_create.html", context=context)
 
 
-# @login_required
-# def saved_post_list_view(request):
-#     user = get_user_model().objects.get(id=request.user.id)
-#     saved_posts = user.saved_posts
-#
-#     context = {"saved_posts": saved_posts}
-#
-#     return render(request, "blog/saved_post_list.html", context=context)
+@login_required
+def saved_post_list_view(request):
+    user = get_user_model().objects.get(id=request.user.id)
+    saved_posts = user.saved_posts
+    context = {"saved_posts": saved_posts}
+
+    return render(request, "blog/saved_post_list.html", context=context)
