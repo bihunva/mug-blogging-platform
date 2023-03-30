@@ -21,6 +21,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def total_comments(self):
+        return self.comments.filter(active=True).count()
+
 
 class Comment(models.Model):
     post = models.ForeignKey(

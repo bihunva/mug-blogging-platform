@@ -39,20 +39,3 @@ def get_most_commented_posts(count=5):
     context = {"most_commented_posts": most_commented_posts}
 
     return context
-
-
-# @register.inclusion_tag("blog/inclusions/comment_list.html")
-# def show_comments(post_id):
-#     post = Post.objects.get(id=post_id)
-#     comments = post.comments.filter(active=True)
-#     context = {"comments": comments}
-#
-#     return context
-#
-#
-# @register.inclusion_tag("blog/inclusions/comment_form.html")
-# def comment_form():
-#     form = CommentForm()
-#     context = {"form": form}
-#
-#     return context

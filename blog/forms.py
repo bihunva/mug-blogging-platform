@@ -38,5 +38,4 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["title", "body"]
-    # title = forms.CharField(max_length=63)
-    # body = forms.CharField(widget=forms.Textarea)
+

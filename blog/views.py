@@ -1,12 +1,12 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
 
 from blog.forms import UserRegisterForm, CommentForm, PostForm
-from blog.models import Post, Comment
+from blog.models import Post
 
 
 def index(request):
@@ -43,29 +43,33 @@ def registration_view(request):
         return render(request, "blog/registration.html", context=context)
 
 
-def post_detail_view(request, post):
-    post = Post.objects.get(slug=post)
+def post_detail_view(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    comments = post.comments.filter(active=True)
 
     if request.method == "GET":
-        comments = post.comments.filter(active=True)
-        total_comments = comments.count()
         context = {
             "post": post,
             "form": CommentForm(),
             "comments": comments,
-            "total_comments": total_comments
         }
         return render(request, "blog/post_detail.html", context=context)
 
     elif request.method == "POST":
         form = CommentForm(request.POST)
-        user = get_user_model().objects.get(id=request.user.id)
 
         if form.is_valid():
-            Comment.objects.create(**form.cleaned_data, author=user, post=post)
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
             return redirect(request.META.get('HTTP_REFERER', ''))
 
-        context = {"form": form}
+        context = {
+            "form": form,
+            "post": post,
+            "comments": comments
+        }
         return render(request, "blog/post_detail.html", context=context)
 
 
@@ -83,7 +87,6 @@ def post_create_view(request):
             post.author = request.user
             post.slug = slugify(post.title)
             post.save()
-            # Post.objects.create(**form.cleaned_data, author=request.user)
             return HttpResponseRedirect(reverse("blog:index"))
 
         context = {"form": form}
@@ -97,3 +100,23 @@ def saved_post_list_view(request):
     context = {"saved_posts": saved_posts}
 
     return render(request, "blog/saved_post_list.html", context=context)
+
+
+@login_required
+def add_post_to_saved(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    user = get_user_model().objects.get(id=request.user.id)
+    user.saved_posts.add(post)
+    user.save()
+
+    return redirect(request.META.get("HTTP_REFERER", ""))
+
+
+@login_required
+def remove_post_from_saved(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    user = get_user_model().objects.get(id=request.user.id)
+    user.saved_posts.remove(post)
+    user.save()
+
+    return redirect(request.META.get("HTTP_REFERER", ""))

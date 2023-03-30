@@ -1,6 +1,7 @@
 {% for post in posts %}
   <h3>
-    <a href="{% url 'blog:post-detail' post=post.slug %}">
+{#    <a href="{% url 'blog:post-detail' post_slug=post.slug %}">#}
+    <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
       {{ post.title }}
     </a>
   </h3>

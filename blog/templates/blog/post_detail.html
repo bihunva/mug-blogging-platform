@@ -6,25 +6,36 @@
     <div class="content-with-sidebar">
 
       <h1>{{ post.title }}</h1>
-      <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
-      <p>{{ post.body }}</p>
 
-      {{ total_comments }} Comments
+      {% with user.is_authenticated as authenticated %}
+        {% if authenticated %}
+          {% if post in user.saved_posts.all %}
+            <a href="{% url 'blog:remove-post-from-saved' post_slug=post.slug %}">Remove post from saved</a>
+          {% else %}
+            <a href="{% url 'blog:add-post-to-saved' post_slug=post.slug %}">Add post to saved</a>
+          {% endif %}
+        {% endif %}
 
-      {% if user.is_authenticated %}
-        {% include "blog/inclusions/comment_form.html" %}
-      {% else %}
-        <p>Only authorized users can leave comments!</p>
-      {% endif %}
+        <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
+        <p>{{ post.body }}</p>
 
-      {% for comment in comments %}
-        <hr>
-        <p>{{ comment.body }}</p>
-        <p>Comment by {{ comment.author.username }}, {{ comment.created }}</p>
-      {% empty %}
-        <hr>
-        <p>There are no comments yet!</p>
-      {% endfor %}
+        {{ post.total_comments }} Comments
+
+        {% if authenticated %}
+          {% include "blog/inclusions/comment_form.html" %}
+        {% else %}
+          <p>Only authorized users can leave comments!</p>
+        {% endif %}
+
+        {% for comment in comments %}
+          <hr>
+          <p>{{ comment.body }}</p>
+          <p>Comment by {{ comment.author.username }}, {{ comment.created }}</p>
+        {% empty %}
+          <hr>
+          <p>There are no comments yet!</p>
+        {% endfor %}
+      {% endwith %}
 
     </div>
     {% include "blog/includes/sidebar.html" %}
