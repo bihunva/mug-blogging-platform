@@ -6,6 +6,7 @@ from blog.views import (
     registration_view,
     post_detail_view,
     post_create_view,
+    saved_post_list_view,
 )
 
 app_name = "blog"
@@ -15,7 +16,6 @@ urlpatterns = [
     path("search/", search_list_view, name="search"),
     path("registration/", registration_view, name="registration"),
     path("posts/create/", post_create_view, name="post-create"),
+    path("posts/saved/", saved_post_list_view, name="saved-posts"),
     path("posts/<slug:post>/", post_detail_view, name="post-detail"),
 ]
-
-
