@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+  {% for post in search_results %}
+    <h3>
+      <a href="#">
+        {{ post.title }}
+      </a>
+    </h3>
+    <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
+    <p>{{ post.body|truncatewords:30 }}</p>
+    <hr>
+    <br>
+  {% empty %}
+    There are no results
+  {% endfor %}
+{% endblock %}

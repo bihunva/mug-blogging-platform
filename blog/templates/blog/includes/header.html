@@ -1,8 +1,12 @@
 {% load static %}
+{% load post_tags %}
 
 <header>
   <div class="logo">
     <a href="{% url "blog:index" %}"><img src="{% static "blog/img/logo.png" %}" alt="logo"></a>
+  </div>
+  <div class="serch_from">
+    {% search_form %}
   </div>
   <nav>
     <ul>
