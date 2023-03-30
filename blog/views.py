@@ -10,6 +10,10 @@ def index(request):
 def search_list_view(request):
     query = request.GET.get("query")
     search_results = Post.objects.filter(title__icontains=query)
-    context = {"search_results": search_results}
+    found_number = search_results.count()
+    context = {
+        "search_results": search_results,
+        "found_number": found_number
+    }
 
     return render(request, "blog/search_list.html", context=context)

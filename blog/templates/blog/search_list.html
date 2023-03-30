@@ -4,6 +4,7 @@
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
       {% for post in search_results %}
+        <p>Found {{ found_number }} result{{ found_number|pluralize }}</p>
         <h3>
           <a href="#">
             {{ post.title }}
@@ -13,7 +14,7 @@
         <p>{{ post.body|truncatewords:30 }}</p>
         <hr><br>
       {% empty %}
-        There are no results
+        <p>There are no results</p>
       {% endfor %}
     </div>
     {% include "blog/includes/sidebar.html" %}
