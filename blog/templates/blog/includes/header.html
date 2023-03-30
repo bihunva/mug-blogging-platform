@@ -1,0 +1,16 @@
+{% load static %}
+
+<header>
+  <div class="logo">
+    <a href="{% url "blog:index" %}"><img src="{% static "blog/img/logo.png" %}" alt="logo"></a>
+  </div>
+  <nav>
+    <ul>
+      <li>User: {{ user.username }}</li>
+      <li><a href="#">Saved posts</a></li>
+      <li><a href="#">Create post</a></li>
+      <li><a href="#">Logout</a></li>
+      <li><a href="#">Login</a></li>
+    </ul>
+  </nav>
+</header>
