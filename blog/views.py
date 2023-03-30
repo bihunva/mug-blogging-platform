@@ -23,15 +23,15 @@ def search_list_view(request):
 
 def registration_view(request):
     if request.method == "POST":
-        form = UserRegisterForm(request.POST)
+        register_form = UserRegisterForm(request.POST)
 
-        if form.is_valid():
-            user = form.save()
+        if register_form.is_valid():
+            user = register_form.save()
             login(request, user)
             return redirect("blog:index")
 
-    form = UserRegisterForm()
-    context = {"register_form": form}
+    register_form = UserRegisterForm()
+    context = {"register_form": register_form}
 
     return render(request, "blog/registration.html", context=context)
 
