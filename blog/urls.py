@@ -1,8 +1,10 @@
 from django.urls import path
 
 from blog.views import (
-    index,
-    search_list_view,
+    # index,
+    PostListView,
+    # search_list_view,
+    SearchListView,
     registration_view,
     post_detail_view,
     post_create_view,
@@ -14,8 +16,8 @@ from blog.views import (
 app_name = "blog"
 
 urlpatterns = [
-    path("", index, name="index"),
-    path("search/", search_list_view, name="search"),
+    path("", PostListView.as_view(), name="index"),
+    path("search/", SearchListView.as_view(), name="search"),
     path("registration/", registration_view, name="registration"),
     path("posts/create/", post_create_view, name="post-create"),
     path("posts/saved/", saved_post_list_view, name="saved-posts"),

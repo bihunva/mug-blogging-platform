@@ -9,6 +9,7 @@ register = template.Library()
 
 @register.inclusion_tag("blog/inclusions/post_list.html")
 def show_all_posts():
+
     posts = Post.objects.all()
     context = {"posts": posts}
 

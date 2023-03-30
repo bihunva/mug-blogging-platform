@@ -4,25 +4,36 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
+from django.views import generic
 
 from blog.forms import UserRegisterForm, CommentForm, PostForm
 from blog.models import Post
 
 
-def index(request):
-    return render(request, "blog/index.html")
+class PostListView(generic.ListView):
+    model = Post
+    template_name = "blog/index.html"
+    context_object_name = "posts"
+    paginate_by = 4
 
 
-def search_list_view(request):
-    query = request.GET.get("query")
-    search_results = Post.objects.filter(title__icontains=query)
-    found_number = search_results.count()
-    context = {
-        "search_results": search_results,
-        "found_number": found_number
-    }
+class SearchListView(generic.ListView):
+    model = Post
+    template_name = "blog/search_list.html"
+    context_object_name = "search_results"
+    paginate_by = 2
 
-    return render(request, "blog/search_list.html", context=context)
+    def get_queryset(self):
+        query = self.request.GET.get("query")
+
+        return Post.objects.filter(title__icontains=query)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        found_number = self.get_queryset().count()
+        context["found_number"] = found_number
+
+        return context
 
 
 def registration_view(request):

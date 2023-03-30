@@ -1,11 +1,26 @@
 {% extends "blog/base.html" %}
-{% load post_tags %}
 
 {% block content %}
 
   {#  {% include "blog/includes/banner.html" %}#}
   <div class="content-with-sidebar-wrapper">
-    <div class="content-with-sidebar">{% show_all_posts %}</div>
+    <div class="content-with-sidebar">
+      {% for post in posts %}
+
+        <h3>
+          <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+            {{ post.title }}
+          </a>
+        </h3>
+
+        <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
+        <p>{{ post.body|truncatewords:30 }}</p>
+        <hr><br>
+      {% empty %}
+        <p>There are no results..</p>
+      {% endfor %}
+    {% include "blog/includes/pagination.html" with page=posts %}
+    </div>
     {% include "blog/includes/sidebar.html" %}
   </div>
 
