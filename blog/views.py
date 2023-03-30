@@ -1,7 +1,11 @@
 from django.contrib.auth import login, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils.text import slugify
 
-from blog.forms import UserRegisterForm, CommentForm
+from blog.forms import UserRegisterForm, CommentForm, PostForm
 from blog.models import Post, Comment
 
 
@@ -63,3 +67,24 @@ def post_detail_view(request, post):
 
         context = {"form": form}
         return render(request, "blog/post_detail.html", context=context)
+
+
+@login_required
+def post_create_view(request):
+    if request.method == "GET":
+        context = {"form": PostForm()}
+        return render(request, "blog/post_create.html", context=context)
+
+    elif request.method == "POST":
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.slug = slugify(post.title)
+            post.save()
+            # Post.objects.create(**form.cleaned_data, author=request.user)
+            return HttpResponseRedirect(reverse("blog:index"))
+
+        context = {"form": form}
+        return render(request, "blog/post_create.html", context=context)

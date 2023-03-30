@@ -18,12 +18,12 @@
       {% endif %}
 
       {% for comment in comments %}
+        <hr>
         <p>{{ comment.body }}</p>
         <p>Comment by {{ comment.author.username }}, {{ comment.created }}</p>
-        <hr>
       {% empty %}
-        <p>There are no comments yet!</p>
         <hr>
+        <p>There are no comments yet!</p>
       {% endfor %}
 
     </div>
