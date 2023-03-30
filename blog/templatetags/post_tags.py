@@ -1,4 +1,5 @@
 from django import template
+from django.db.models import Count
 
 from blog.forms import SearchForm
 from blog.models import Post
@@ -6,7 +7,7 @@ from blog.models import Post
 register = template.Library()
 
 
-@register.inclusion_tag("blog/tags/post_list.html")
+@register.inclusion_tag("blog/inclusions/post_list.html")
 def show_all_posts():
     posts = Post.objects.all()
     context = {"posts": posts}
@@ -14,9 +15,17 @@ def show_all_posts():
     return context
 
 
-@register.inclusion_tag("blog/tags/search_form.html")
+@register.inclusion_tag("blog/inclusions/search_form.html")
 def search_form():
     form = SearchForm()
     context = {"form": form}
 
     return context
+
+
+@register.inclusion_tag("blog/inclusions/latest_posts.html")
+def show_latest_posts(count=5):
+    latest_posts = Post.objects.order_by('-created')[:count]
+    content = {"latest_posts": latest_posts}
+
+    return content

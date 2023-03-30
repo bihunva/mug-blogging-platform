@@ -1,18 +1,30 @@
+body {
+    margin: 0;
+}
+
+.header-wrapper {
+    border-bottom: 1px solid lightgray;
+}
+
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 15px 20px 10px 20px;
+}
+
+.logo-search-form {
+    display: flex;
 }
 
 .logo {
-    display: inline;
-    align-items: center;
-    /*width: 150px;*/
+    display: flex;
+    justify-content: center;
+    margin-right: 30px;
 }
 
 .logo img {
     height: 50px;
-    margin-right: 10px;
 }
 
 nav ul {
@@ -36,4 +48,14 @@ nav a {
 
 nav li:last-child {
     margin-right: 0;
+}
+
+.content-with-sidebar-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 40px;
+    align-items: start;
+    max-width: 70%;
+    margin: 0 auto;
 }

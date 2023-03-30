@@ -3,8 +3,10 @@
 
 {% block content %}
 
-{#  {% include "blog/includes/banner.html" %}#}
-  {% show_all_posts %}
-{#  {% include "blog/includes/sidebar.html" %}#}
+  {#  {% include "blog/includes/banner.html" %}#}
+  <div class="content-with-sidebar-wrapper">
+    <div class="content-with-sidebar">{% show_all_posts %}</div>
+    {% include "blog/includes/sidebar.html" %}
+  </div>
 
 {% endblock %}
