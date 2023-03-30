@@ -34,3 +34,10 @@ def registration_view(request):
     context = {"register_form": form}
 
     return render(request, "blog/registration.html", context=context)
+
+
+def post_detail_view(request, post):
+    post = Post.objects.get(slug=post)
+    context = {"post": post}
+
+    return render(request, "blog/post_detail.html", context=context)

@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+  <div class="content-with-sidebar-wrapper">
+    <div class="content-with-sidebar">
+      <h1>{{ post.title }}</h1>
+      <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
+      <p>{{ post.body }}</p>
+    </div>
+    {% include "blog/includes/sidebar.html" %}
+  </div>
+{% endblock %}
