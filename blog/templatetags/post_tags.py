@@ -29,3 +29,13 @@ def show_latest_posts(count=5):
     content = {"latest_posts": latest_posts}
 
     return content
+
+
+@register.inclusion_tag("blog/inclusions/most_commented_posts.html")
+def get_most_commented_posts(count=5):
+    most_commented_posts = Post.objects.annotate(
+        total_comments=Count("comments")
+    ).order_by("-total_comments")[:count]
+    context = {"most_commented_posts": most_commented_posts}
+
+    return context
