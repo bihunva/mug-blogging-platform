@@ -1,7 +1,8 @@
 <ul>
   {% for post in most_commented_posts %}
     <li>
-      <a href="{% url 'blog:post-detail' post_slug=post.slug %}">{{ post.title }}</a>
+      <h5><a href="{% url 'blog:post-detail' post_slug=post.slug %}">{{ post.title }}</a></h5>
+      <p class="written-by">{{ post.author.username }}</p>
     </li>
   {% endfor %}
 </ul>

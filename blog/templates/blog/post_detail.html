@@ -1,25 +1,31 @@
 {% extends "blog/base.html" %}
+{% load static %}
 {% load post_tags %}
 
 {% block content %}
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
 
-      <h1>{{ post.title }}</h1>
 
       {% with user.is_authenticated as authenticated %}
-        {% if authenticated %}
-          {% if post in user.saved_posts.all %}
-            <a href="{% url 'blog:remove-post-from-saved' post_slug=post.slug %}">Remove post from saved</a>
-          {% else %}
-            <a href="{% url 'blog:add-post-to-saved' post_slug=post.slug %}">Add post to saved</a>
+        <h1>{{ post.title }}</h1>
+        <p>
+          <i>Written by {{ post.author.username }}, {{ post.created }} </i>
+          {% if authenticated %}
+            {% if post in user.saved_posts.all %}
+              <a href="{% url 'blog:remove-post-from-saved' post_slug=post.slug %}">
+                <img class="icon bookmark-header-icon" src="{% static 'blog/img/bookmark.png' %}" alt="bookmark">
+              </a>
+            {% else %}
+              <a href="{% url 'blog:add-post-to-saved' post_slug=post.slug %}">
+                <img class="icon bookmark-header-icon" src="{% static 'blog/img/bookmark_filled.png' %}" alt="bookmark">
+              </a>
+            {% endif %}
           {% endif %}
-        {% endif %}
-
-        <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
+        </p>
         <p>{{ post.body }}</p>
 
-        {{ post.total_comments }} Comments
+        {{ post.total_comments }} <img class="icon bookmark-header-icon" src="{% static 'blog/img/comment.png' %}" alt="bookmark">
 
         {% if authenticated %}
           {% include "blog/inclusions/comment_form.html" %}

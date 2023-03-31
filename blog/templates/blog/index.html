@@ -1,25 +1,40 @@
 {% extends "blog/base.html" %}
+{% load static %}
 
 {% block content %}
 
   {#  {% include "blog/includes/banner.html" %}#}
+  <div class="banner-wrapper">
+    <div class="banner">
+      <div class="banner-text">
+        <h1 class="banner-text-title">MUG. Stay curious.</h1>
+        <p class="banner-text-body">Discover stories from writers on any topic.</p>
+        <a href="{% url 'blog:registration' %}" class="banner-btn">Start reading</a>
+      </div>
+      <div class="banner-img">
+        {% load static %}
+        <img src="{% static 'blog/img/undraw_people_re_8spw.svg' %}" alt="My image" height="300">
+      </div>
+    </div>
+  </div>
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
+
       {% for post in posts %}
+        <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+          <div class="post">
+            <h2>
+              {{ post.title }}
+            </h2>
 
-        <h3>
-          <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
-            {{ post.title }}
-          </a>
-        </h3>
+            <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
+            <p>{{ post.body|truncatewords:30 }}</p>
+          </div>
+        </a>
 
-        <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
-        <p>{{ post.body|truncatewords:30 }}</p>
-        <hr><br>
-      {% empty %}
-        <p>There are no results..</p>
       {% endfor %}
-    {% include "blog/includes/pagination.html" with page=posts %}
+      {% include "blog/includes/pagination.html" with page=posts %}
+
     </div>
     {% include "blog/includes/sidebar.html" %}
   </div>

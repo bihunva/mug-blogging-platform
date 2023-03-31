@@ -1,9 +1,7 @@
 from django.urls import path
 
 from blog.views import (
-    # index,
     PostListView,
-    # search_list_view,
     SearchListView,
     registration_view,
     post_detail_view,

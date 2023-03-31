@@ -131,3 +131,4 @@ def remove_post_from_saved(request, post_slug):
     user.save()
 
     return redirect(request.META.get("HTTP_REFERER", ""))
+

@@ -2,6 +2,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from taggit.managers import TaggableManager
+
 
 class Post(models.Model):
     title = models.CharField(max_length=250)
@@ -13,6 +15,8 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name="posts"
     )
+
+    tags = TaggableManager()
 
     class Meta:
         ordering = ['-created']
