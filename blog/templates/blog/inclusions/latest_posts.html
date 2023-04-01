@@ -1,7 +1,13 @@
-<ul>
-  {% for post in latest_posts %}
-    <li>
-      <a href="{% url 'blog:post-detail' post_slug=post.slug %}">{{ post.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
+{#{% for post in latest_posts %}#}
+{#  <a href="{% url 'blog:post-detail' post_slug=post.slug %}">{{ post.title }}</a>#}
+{#{% endfor %}#}
+
+
+{% for post in latest_posts %}
+  <div class="sidebar-post">
+  <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+      <p class="sidebar-post-written-by">by {{ post.author.username }}, {{ post.created|date:"F d" }}</p>
+      <h5 class="sidebar-post-title">{{ post.title }}</h5>
+  </a>
+  </div>
+{% endfor %}
