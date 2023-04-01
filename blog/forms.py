@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UsernameField, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 
 from blog.models import User, Comment, Post
 
@@ -7,9 +7,9 @@ from blog.models import User, Comment, Post
 class SearchForm(forms.Form):
     query = forms.CharField(
         max_length=100,
-        required=False,
+        required=True,
         label="",
-        widget=forms.TextInput(attrs={"placeholder": "Search by title.."})
+        widget=forms.TextInput(attrs={"placeholder": "Search by title..", "class": "search-input"})
     )
 
 

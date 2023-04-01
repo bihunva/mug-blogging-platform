@@ -77,7 +77,6 @@ nav li:last-child {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: auto;
-    /*grid-column-gap: ;*/
     grid-gap: 10%;
     align-items: start;
     max-width: 70%;
@@ -106,7 +105,6 @@ nav li:last-child {
     text-align: center;
     align-items: center;
     justify-content: space-between;
-    /*margin-bottom: 40px;*/
 }
 
 .banner-text {
@@ -127,7 +125,6 @@ nav li:last-child {
 }
 
 .banner-btn:hover {
-    /*background-color: rgba(153, 209, 194, 0.3);*/
     background-color: #ddffdd;
 }
 
@@ -155,22 +152,13 @@ nav li:last-child {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*height: 60vh;*/
-    /*border: gray solid 1px;*/
-    /*border-radius: 10px;*/
     max-width: 400px;
     margin: 80px auto 0 auto;
     border: 1px solid lightgrey;
     border-radius: 3px;
-    /*box-shadow: 4px 4px 0 -1px #000000;*/
     padding: 20px;
-    /*background-color: lightgoldenrodyellow;*/
     background-color: lightgoldenrodyellow;
 }
-
-/*.login p {*/
-/*    margin: 0;*/
-/*}*/
 
 .login-form-button {
     border: 1px solid lightgrey;
@@ -185,6 +173,10 @@ nav li:last-child {
     padding: 10px;
     width: 300px;
     outline: none;
+}
+
+.login-form-field::placeholder {
+    color: lightgray;
 }
 
 .login-form-button:hover {
@@ -211,4 +203,21 @@ nav li:last-child {
 
 .error-border {
     border: lightcoral 1px solid;
+}
+
+
+.search-input {
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 4px;
+    background-color: transparent;
+    outline: none;
+}
+
+.search-input:focus {
+    background-color: whitesmoke;
+}
+
+.search-input::placeholder {
+    color: lightgrey;
 }

@@ -1,5 +1,6 @@
 {% load static %}
 {% load post_tags %}
+{% load widget_tweaks %}
 
 <div class="header-wrapper">
   <header>
@@ -7,9 +8,7 @@
       <div class="logo">
         <a href="{% url "blog:index" %}"><img src="{% static 'blog/img/logo.png' %}" alt="logo"></a>
       </div>
-      <div class="search_from">
         {% search_form %}
-      </div>
     </div>
     <nav>
       <ul>

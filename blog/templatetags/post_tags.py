@@ -1,19 +1,10 @@
 from django import template
 from django.db.models import Count
 
-from blog.forms import SearchForm, CommentForm
+from blog.forms import SearchForm
 from blog.models import Post
 
 register = template.Library()
-
-
-@register.inclusion_tag("blog/inclusions/post_list.html")
-def show_all_posts():
-
-    posts = Post.objects.all()
-    context = {"posts": posts}
-
-    return context
 
 
 @register.inclusion_tag("blog/inclusions/search_form.html")

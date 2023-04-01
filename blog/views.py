@@ -26,7 +26,14 @@ class SearchListView(generic.ListView):
     def get_queryset(self):
         query = self.request.GET.get("query")
 
-        return Post.objects.filter(title__icontains=query)
+        if not query:
+            return Post.objects.none()
+
+        qs = Post.objects.filter(title__icontains=query)
+        if qs.exists():
+            return qs
+        else:
+            return Post.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -131,4 +138,3 @@ def remove_post_from_saved(request, post_slug):
     user.save()
 
     return redirect(request.META.get("HTTP_REFERER", ""))
-
