@@ -1,12 +1,22 @@
 {% extends "blog/base.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
+  <div class="login">
+    <form action="{% url 'login' %}" method="post" novalidate>
+      {% csrf_token %}
 
-  <h1>Login | <a href="{% url 'blog:registration' %}">Registration</a></h1>
-  <form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login">
-  </form>
+            {% if form.non_field_errors %}
+              {% for error in form.non_field_errors %}
+                <p class="login-form-error-message">{{ error }}</p>
+              {% endfor %}
+            {% endif %}
 
+      <p>{% render_field form.username|add_class:"login-form-field"|add_error_class:"error-border" placeholder="username" type="search" %}</p>
+      <p>{% render_field form.password|add_class:"login-form-field"|add_error_class:"error-border" placeholder="password" %}</p>
+      <p><input type="submit" value="Login" class="login-form-button"></p>
+      <p class="login-register-link">Don't have account yet? Register <a href="{% url 'blog:registration' %}">here</a>.
+      </p>
+    </form>
+  </div>
 {% endblock %}
