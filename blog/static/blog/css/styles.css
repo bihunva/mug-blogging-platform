@@ -150,7 +150,7 @@ nav li:last-child {
     margin: 0;
 }
 
-.login {
+.login-registration {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -169,7 +169,7 @@ nav li:last-child {
     width: 300px;
 }
 
-.login-form-field {
+.login-registration-form-field {
     border: 1px solid lightgrey;
     border-radius: 5px;
     padding: 10px;
@@ -177,7 +177,7 @@ nav li:last-child {
     outline: none;
 }
 
-.login-form-field::placeholder {
+.login-registration-form-field::placeholder {
     color: lightgray;
 }
 
@@ -203,10 +203,10 @@ nav li:last-child {
     color: #4ac1f7;
 }
 
+
 .error-border {
     border: lightcoral 1px solid;
 }
-
 
 .search-input {
     border: 1px solid lightgrey;

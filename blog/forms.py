@@ -14,7 +14,36 @@ class SearchForm(forms.Form):
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    username = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "username"})
+    )
+    first_name = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "first name"})
+    )
+    last_name = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "last name"})
+    )
+    email = forms.EmailField(
+        required=True,
+        label="",
+        widget=forms.EmailInput(attrs={"placeholder": "email"})
+    )
+    password1 = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.PasswordInput(attrs={"placeholder": "password"})
+    )
+    password2 = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.PasswordInput(attrs={"placeholder": "password again"})
+    )
 
     class Meta:
         model = User

@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-  <div class="login">
+  <div class="login-registration">
     <form action="{% url 'login' %}" method="post" novalidate>
       {% csrf_token %}
 
@@ -12,10 +12,10 @@
         {% endfor %}
       {% endif %}
 
-      <p>{% render_field form.username|add_class:"login-form-field"|add_error_class:"error-border" placeholder="username" %}</p>
-      <p>{% render_field form.password|add_class:"login-form-field"|add_error_class:"error-border" placeholder="password" %}</p>
-      <p><input type="submit" value="Login" class="login-form-button"></p>
-      <p class="login-register-link">Don't have an account yet? Register <a href="{% url 'blog:registration' %}">here</a>.
+      <p>{% render_field form.username|add_class:"login-registration-form-field"|add_error_class:"error-border" placeholder="username" %}</p>
+      <p>{% render_field form.password|add_class:"login-registration-form-field"|add_error_class:"error-border" placeholder="password" %}</p>
+      <p><input type="submit" value="Sign in" class="login-form-button"></p>
+      <p class="login-register-link">Don't have an account yet? Sign up <a href="{% url 'blog:registration' %}">here</a>.
       </p>
     </form>
   </div>
