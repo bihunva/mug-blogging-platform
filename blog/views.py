@@ -16,7 +16,7 @@ class PostListView(generic.ListView):
     model = Post
     template_name = "blog/index.html"
     context_object_name = "posts"
-    paginate_by = 8
+    paginate_by = 6
 
     def get_queryset(self):
         return super().get_queryset().select_related("author").prefetch_related("tags")
@@ -26,7 +26,7 @@ class SearchListView(generic.ListView):
     model = Post
     template_name = "blog/search_list.html"
     context_object_name = "search_results"
-    paginate_by = 8
+    paginate_by = 6
 
     def get_queryset(self):
         query = self.request.GET.get("query")
@@ -65,7 +65,7 @@ class PostDetailView(generic.View):
     template_name = "blog/post_detail.html"
 
     def get(self, request, post_slug):
-        post = Post.objects.select_related("author").get(slug=post_slug)
+        post = get_object_or_404(Post.objects.select_related("author"), slug=post_slug)
         comments = post.comments.filter(active=True).select_related("author")
         form = CommentForm()
 
@@ -94,7 +94,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "blog/post_create.html"
     success_url = reverse_lazy("blog:index")
 
-    def form_valid(self, form: type[PostForm]):
+    def form_valid(self, form):
         post = form.save(commit=False)
         post.author = self.request.user
         post.slug = slugify(post.title)

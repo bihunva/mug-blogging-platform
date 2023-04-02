@@ -16,7 +16,6 @@ ul {
     list-style: none;
 }
 
-
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -31,14 +30,15 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 3px;
     max-width: 70%;
     margin: 0 auto;
-
 }
 
 .logo-search-form {
     display: flex;
+    align-items: center;
+    text-align: center;
+    vertical-align: center;
 }
 
 .logo {
@@ -48,7 +48,7 @@ header {
 }
 
 .logo img {
-    height: 50px;
+    height: 40px;
 }
 
 nav ul {
@@ -206,7 +206,6 @@ nav li:last-child {
     color: #4ac1f7;
 }
 
-
 .error-border {
     border: lightcoral 1px solid;
 }
@@ -239,7 +238,6 @@ nav li:last-child {
 .sidebar-section {
     margin-bottom: 40px;
 }
-
 
 .sidebar-section-title {
     margin-bottom: 20px;

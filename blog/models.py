@@ -13,40 +13,29 @@ class Post(models.Model):
     body = SummernoteTextField()
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="posts"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="posts"
     )
 
     tags = TaggableManager()
 
     class Meta:
-        ordering = ['-created']
-        indexes = [models.Index(fields=['-created'])]
+        ordering = ["-created"]
+        indexes = [models.Index(fields=["-created"])]
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse(
-            "blog:post-detail",
-            kwargs={"post_slug": self.slug}
-        )
+        return reverse("blog:post-detail", kwargs={"post_slug": self.slug})
 
     def total_comments(self):
         return self.comments.filter(active=True).count()
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(
-        Post,
-        on_delete=models.CASCADE,
-        related_name="comments"
-    )
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="comments"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments"
     )
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
