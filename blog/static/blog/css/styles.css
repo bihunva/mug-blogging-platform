@@ -338,3 +338,28 @@ ul.pagination li span {
     font-style: italic;
     font-size: 15px;
 }
+
+.post-detail-title-wrapper {
+    margin-top: 40px;
+    padding: 0;
+    /*text-align: center;*/
+    display: flex;
+    /*align-content: center;*/
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-detail-written-by {
+    font-style: italic;
+    color: darkgray;
+}
+
+.add-remove-bookmark-icon {
+    float: right;
+}
+
+.total-comments {
+    display: flex;
+    column-gap: 5px;
+    justify-content: right;
+}
