@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     # Third-party apps
     "taggit",
     "widget_tweaks",
+    "django_summernote",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -116,9 +119,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-
-STATIC_ROOT = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -130,3 +132,21 @@ AUTH_USER_MODEL = "blog.User"
 LOGIN_REDIRECT_URL = "/"
 
 LOGOUT_REDIRECT_URL = "/"
+
+SUMMERNOTE_CONFIG = {
+    "summernote": {
+        "airMode": False,
+        "width": "100%",
+        "placeholder": "Start writing your post here..",
+        "toolbar": [
+            ["font", ["bold", "italic", "underline"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["insert", ["link"]],
+            ["fontname", ["fontname"]],
+        ],
+    },
+}
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

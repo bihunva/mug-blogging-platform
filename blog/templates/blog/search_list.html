@@ -2,29 +2,28 @@
 
 {% block content %}
 
-<div class="content-with-sidebar-wrapper">
-  <div class="content-with-sidebar">
-
-    {% if search_results %}
-      <p>Found {{ found_number }} result{{ found_number|pluralize }}</p>
-    {% endif %}
+  <div class="content-with-sidebar-wrapper">
+    <div class="content-with-sidebar">
+      {% if search_results %}
+        <p>Found {{ found_number }} result{{ found_number|pluralize }}</p>
+      {% endif %}
       {% for post in search_results %}
-    <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
-      <div class="post">
-        <h3>
-          {{ post.title }}
-        </h3>
-        <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
-        <p>{{ post.body|truncatewords:30 }}</p>
-      </div>
-    </a>
+        <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+          <div class="post">
+            <h3>
+              {{ post.title }}
+            </h3>
+            <p><i>Written by {{ post.author.username }}, {{ post.created }}</i></p>
+            <p>{{ post.body|truncatewords:30|safe }}</p>
+          </div>
+        </a>
 
-    {% empty %}
-    <p>There are no results</p>
-    {% endfor %}
-    {% include "blog/includes/pagination.html" with page=posts %}
+      {% empty %}
+        <p>There are no results</p>
+      {% endfor %}
+      {% include "blog/includes/pagination.html" with page=posts %}
+    </div>
+    {% include "blog/includes/sidebar.html" %}
   </div>
-  {% include "blog/includes/sidebar.html" %}
-</div>
 
 {% endblock %}

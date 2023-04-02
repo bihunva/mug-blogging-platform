@@ -1,28 +1,28 @@
 {% extends "blog/base.html" %}
+{% load cache %}
 {% load static %}
 
 {% block content %}
-
   {% include "blog/includes/banner.html" %}
-
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
-      <div class="post-container">
-        {% for post in posts %}
-          <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
-            <div class="post">
-              <h2>
-                {{ post.title }}
-              </h2>
-              <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
-              <p class="post-body">{{ post.body|truncatewords:30 }}</p>
-            </div>
-          </a>
-        {% endfor %}
-      </div>
+      {% cache 300 post_container %}
+        <div class="post-container">
+          {% for post in posts %}
+            <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+              <div class="post">
+                <h2>
+                  {{ post.title }}
+                </h2>
+                <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
+                <p class="post-body">{{ post.body|truncatewords:30|safe }}</p>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% endcache %}
       {% include "blog/includes/pagination.html" with page=posts %}
     </div>
     {% include "blog/includes/sidebar.html" %}
   </div>
-
 {% endblock %}

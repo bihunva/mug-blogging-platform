@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django_summernote.fields import SummernoteTextField, SummernoteTextFormField
+from django_summernote.widgets import SummernoteInplaceWidget
 
 from blog.models import User, Comment, Post
 
@@ -64,6 +66,8 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    body = SummernoteTextField()
+
     class Meta:
         model = Post
         fields = ["title", "body"]

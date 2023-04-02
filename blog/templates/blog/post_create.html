@@ -1,12 +1,14 @@
 {% extends  "blog/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
-  <h2>Create post page</h2>
-
-  <form action="" method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <input type="submit" value="Submit">
-  </form>
+  <div class="create-form">
+    <form action="" method="post" novalidate>
+      {% csrf_token %}
+      {% render_field form.title|add_class:"create-form-title" placeholder="Enter the title here.. " %}
+      {{ form.body }}
+      <input class="create-form-btn" type="submit" value="Publish">
+    </form>
+  </div>
 {% endblock %}

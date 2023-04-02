@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
+from django_summernote.fields import SummernoteTextField
 
 from taggit.managers import TaggableManager
 
@@ -8,7 +10,7 @@ from taggit.managers import TaggableManager
 class Post(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique_for_date="created")
-    body = models.TextField()
+    body = SummernoteTextField()
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -24,6 +26,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("blog:post-detail", kwargs={"post_slug": self.slug})
 
     def total_comments(self):
         return self.comments.filter(active=True).count()

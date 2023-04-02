@@ -35,7 +35,7 @@
         <p class="post-detail-written-by ">
           Written by {{ post.author.username }}, {{ post.created }}
         </p>
-        <p class="post-detail-body">{{ post.body }}</p>
+        <p class="post-detail-body">{{ post.body|safe }}</p>
 
         <p class="total-comments">
           <img class="icon bookmark-header-icon" src="{% static 'blog/img/comment.png' %}" alt="bookmark">

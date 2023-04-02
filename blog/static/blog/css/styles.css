@@ -17,7 +17,6 @@ ul {
 }
 
 
-
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -135,6 +134,8 @@ nav li:last-child {
     box-shadow: 4px 4px 0 -1px #000000;
     padding: 17px;
     margin: 25px 0 0 0;
+    max-height: 150px;
+    overflow: hidden;
 }
 
 .post:hover {
@@ -239,9 +240,6 @@ nav li:last-child {
     margin-bottom: 40px;
 }
 
-.sidebar-section:last-child {
-    margin: 0;
-}
 
 .sidebar-section-title {
     margin-bottom: 20px;
@@ -249,10 +247,6 @@ nav li:last-child {
 
 .sidebar-post {
     margin-bottom: 13px;
-}
-
-.sidebar-post:last-child {
-    margin: 0;
 }
 
 .sidebar-post:hover .sidebar-post-title {
@@ -390,16 +384,8 @@ ul.pagination li span {
 }
 
 .comment-form-btn {
-    border: lightgrey 1px solid;
-    border-radius: 3px;
     padding: 9px;
     margin: 0 0 20px 0;
-    background-color: lightgoldenrodyellow;
-}
-
-.comment-form-btn:hover {
-    /*background-color: #E8E8E8;*/
-    border-color: black;
 }
 
 .remove-from-saved-icon {
@@ -416,4 +402,47 @@ ul.pagination li span {
 
 .saved-page-title {
     margin-top: 40px;
+}
+
+.create-form {
+    text-align: center;
+    margin: 70px auto 0 auto;
+    max-width: 50%;
+}
+
+.create-form-title {
+    outline: none;
+    padding: 15px;
+    font-size: 20px;
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    background-color: lightgoldenrodyellow;
+    margin-bottom: 15px;
+}
+
+.create-form-title::placeholder {
+    font-size: 14px;
+    color: grey;
+    font-family: "Helvetica Neue", serif
+}
+
+.create-form-btn {
+    float: right;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    margin: 0 0 5px 0;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 11px;
+    background-color: rgba(255,255,255,0.7);
+}
+
+.tag:hover {
+    background-color: #ddffdd;
 }

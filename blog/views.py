@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
-from django.views import generic
+from django.views import generic, View
+from taggit.models import Tag
 
 from blog.forms import UserRegisterForm, CommentForm, PostForm
 from blog.models import Post
@@ -14,42 +15,39 @@ class PostListView(generic.ListView):
     model = Post
     template_name = "blog/index.html"
     context_object_name = "posts"
-    paginate_by = 4
+    paginate_by = 8
+
+    def get_queryset(self):
+        return super().get_queryset().select_related("author").prefetch_related("tags")
 
 
 class SearchListView(generic.ListView):
     model = Post
     template_name = "blog/search_list.html"
     context_object_name = "search_results"
-    paginate_by = 2
+    paginate_by = 8
 
     def get_queryset(self):
         query = self.request.GET.get("query")
-
         if not query:
-            return Post.objects.none()
+            return self.model.objects.none()
 
-        qs = Post.objects.filter(title__icontains=query)
-        if qs.exists():
-            return qs
-        else:
-            return Post.objects.none()
+        return self.model.objects.filter(title__icontains=query).select_related("author")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        found_number = self.get_queryset().count()
-        context["found_number"] = found_number
+        context["found_number"] = self.object_list.count()
 
         return context
 
 
-def registration_view(request):
-    if request.method == "GET":
+class RegistrationView(View):
+    def get(self, request, *args, **kwargs):
         register_form = UserRegisterForm()
         context = {"register_form": register_form}
         return render(request, "blog/registration.html", context=context)
 
-    elif request.method == "POST":
+    def post(self, request, *args, **kwargs):
         register_form = UserRegisterForm(request.POST)
 
         if register_form.is_valid():
@@ -62,8 +60,8 @@ def registration_view(request):
 
 
 def post_detail_view(request, post_slug):
-    post = get_object_or_404(Post, slug=post_slug)
-    comments = post.comments.filter(active=True)
+    post = Post.objects.select_related("author").get(slug=post_slug)
+    comments = post.comments.filter(active=True).select_related("author")
 
     if request.method == "GET":
         context = {
@@ -114,7 +112,7 @@ def post_create_view(request):
 @login_required
 def saved_post_list_view(request):
     user = get_user_model().objects.get(id=request.user.id)
-    saved_posts = user.saved_posts
+    saved_posts = user.saved_posts.select_related('author')
     context = {"saved_posts": saved_posts}
 
     return render(request, "blog/saved_post_list.html", context=context)
@@ -138,3 +136,11 @@ def remove_post_from_saved(request, post_slug):
     user.save()
 
     return redirect(request.META.get("HTTP_REFERER", ""))
+
+
+def post_list_by_tag(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tags__in=[tag])
+    context = {"posts": posts, "tag": tag}
+
+    return render(request, "blog/post_list_by_tag.html", context=context)

@@ -1,5 +1,6 @@
 from django import template
 from django.db.models import Count
+from taggit.models import Tag
 
 from blog.forms import SearchForm
 from blog.models import Post
@@ -17,7 +18,7 @@ def search_form():
 
 @register.inclusion_tag("blog/inclusions/latest_posts.html")
 def show_latest_posts(count=5):
-    latest_posts = Post.objects.order_by('-created')[:count]
+    latest_posts = Post.objects.order_by('-created').select_related("author")[:count]
     content = {"latest_posts": latest_posts}
 
     return content
@@ -27,7 +28,15 @@ def show_latest_posts(count=5):
 def get_most_commented_posts(count=5):
     most_commented_posts = Post.objects.annotate(
         total_comments=Count("comments")
-    ).order_by("-total_comments")[:count]
+    ).select_related("author").order_by("-total_comments")[:count]
     context = {"most_commented_posts": most_commented_posts}
+
+    return context
+
+
+@register.inclusion_tag("blog/inclusions/all_tags.html")
+def show_tags(count=10):
+    tags = Tag.objects.all()[:count]
+    context = {"tags": tags}
 
     return context

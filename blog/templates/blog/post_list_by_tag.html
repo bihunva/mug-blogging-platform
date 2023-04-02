@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+  <div class="content-with-sidebar-wrapper">
+    <div class="content-with-sidebar">
+      <div class="post-container">
+        <h4>#{{ tag.name }}</h4>
+        {% for post in posts %}
+          <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+            <div class="post">
+              <h2>
+                {{ post.title }}
+              </h2>
+              <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
+              <p class="post-body">{{ post.body|truncatewords:30|safe }}</p>
+            </div>
+          </a>
+          {% empty %}
+          <p>There are no posts by this tag yet.</p>
+        {% endfor %}
+      </div>
+      {% include "blog/includes/pagination.html" with page=posts %}
+    </div>
+    {% include "blog/includes/sidebar.html" %}
+  </div>
+{% endblock %}
