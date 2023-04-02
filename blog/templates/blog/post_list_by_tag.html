@@ -8,14 +8,12 @@
         {% for post in posts %}
           <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
             <div class="post">
-              <h2>
-                {{ post.title }}
-              </h2>
+              <h2>{{ post.title }}</h2>
               <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
               <p class="post-body">{{ post.body|truncatewords:30|safe }}</p>
             </div>
           </a>
-          {% empty %}
+        {% empty %}
           <p>There are no posts by this tag yet.</p>
         {% endfor %}
       </div>

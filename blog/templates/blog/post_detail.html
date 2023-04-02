@@ -5,11 +5,8 @@
 {% block content %}
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
-
-
       {% with user.is_authenticated as authenticated %}
         <div class="post-detail-title-wrapper">
-
           <h1 class="post-detail-title">{{ post.title }}</h1>
           {% if authenticated %}
             {% if post in user.saved_posts.all %}
@@ -31,23 +28,19 @@
             {% endif %}
           {% endif %}
         </div>
-
         <p class="post-detail-written-by ">
           Written by {{ post.author.username }}, {{ post.created }}
         </p>
         <p class="post-detail-body">{{ post.body|safe }}</p>
-
         <p class="total-comments">
           <img class="icon bookmark-header-icon" src="{% static 'blog/img/comment.png' %}" alt="bookmark">
           {{ post.total_comments }}
         </p>
-
         {% if authenticated %}
           {% include "blog/inclusions/comment_form.html" %}
         {% else %}
           <p>Only authorized users can leave comments!</p>
         {% endif %}
-
         {% for comment in comments %}
           <div class="comment">
             <p class="comment-author">{{ comment.author.username }} <span
@@ -58,7 +51,6 @@
           <p>There are no comments yet!</p>
         {% endfor %}
       {% endwith %}
-
     </div>
     {% include "blog/includes/sidebar.html" %}
   </div>

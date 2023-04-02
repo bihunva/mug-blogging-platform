@@ -25,7 +25,7 @@ def show_latest_posts(count=5):
 
 
 @register.inclusion_tag("blog/inclusions/most_commented_posts.html")
-def get_most_commented_posts(count=5):
+def show_most_commented_posts(count=5):
     most_commented_posts = Post.objects.annotate(
         total_comments=Count("comments")
     ).select_related("author").order_by("-total_comments")[:count]
@@ -34,7 +34,7 @@ def get_most_commented_posts(count=5):
     return context
 
 
-@register.inclusion_tag("blog/inclusions/all_tags.html")
+@register.inclusion_tag("blog/inclusions/tag_list.html")
 def show_tags(count=10):
     tags = Tag.objects.all()[:count]
     context = {"tags": tags}

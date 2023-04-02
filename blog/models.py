@@ -1,9 +1,9 @@
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.db import models
+from django.conf import settings
 from django.urls import reverse
-from django_summernote.fields import SummernoteTextField
+from django.db import models
 
+from django_summernote.fields import SummernoteTextField
 from taggit.managers import TaggableManager
 
 
@@ -28,7 +28,10 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("blog:post-detail", kwargs={"post_slug": self.slug})
+        return reverse(
+            "blog:post-detail",
+            kwargs={"post_slug": self.slug}
+        )
 
     def total_comments(self):
         return self.comments.filter(active=True).count()
@@ -40,7 +43,11 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name="comments"
     )
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="comments"
+    )
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

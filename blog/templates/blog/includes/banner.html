@@ -22,28 +22,28 @@
 
 
 <script>
-  const button = document.querySelector('#banner-hide-btn');
-  const banner = document.querySelector('#banner-wrapper');
+    const button = document.querySelector('#banner-hide-btn');
+    const banner = document.querySelector('#banner-wrapper');
 
-  let isBannerVisible = localStorage.getItem('isBannerVisible') !== 'false';
+    let isBannerVisible = localStorage.getItem('isBannerVisible') !== 'false';
 
-  if (!isBannerVisible) {
-    banner.style.display = 'none';
-    button.textContent = '-';
-  }
-
-  function toggleBanner() {
-    if (isBannerVisible) {
-      banner.style.display = 'none'; // ховаємо банер
-      button.textContent = '-'; // змінюємо текст кнопки
-    } else {
-      banner.style.display = 'block'; // показуємо банер
-      button.textContent = '-'; // змінюємо текст кнопки
+    if (!isBannerVisible) {
+        banner.style.display = 'none';
+        button.textContent = '-';
     }
-    isBannerVisible = !isBannerVisible; // змінюємо стан банера
 
-    localStorage.setItem('isBannerVisible', isBannerVisible);
-  }
+    function toggleBanner() {
+        if (isBannerVisible) {
+            banner.style.display = 'none'; // ховаємо банер
+            button.textContent = '-'; // змінюємо текст кнопки
+        } else {
+            banner.style.display = 'block'; // показуємо банер
+            button.textContent = '-'; // змінюємо текст кнопки
+        }
+        isBannerVisible = !isBannerVisible; // змінюємо стан банера
 
-  button.addEventListener('click', toggleBanner);
+        localStorage.setItem('isBannerVisible', isBannerVisible);
+    }
+
+    button.addEventListener('click', toggleBanner);
 </script>
