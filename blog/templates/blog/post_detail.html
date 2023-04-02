@@ -25,7 +25,8 @@
         </p>
         <p>{{ post.body }}</p>
 
-        {{ post.total_comments }} <img class="icon bookmark-header-icon" src="{% static 'blog/img/comment.png' %}" alt="bookmark">
+        {{ post.total_comments }}
+        <img class="icon bookmark-header-icon" src="{% static 'blog/img/comment.png' %}" alt="bookmark">
 
         {% if authenticated %}
           {% include "blog/inclusions/comment_form.html" %}
@@ -34,11 +35,11 @@
         {% endif %}
 
         {% for comment in comments %}
-          <hr>
-          <p>{{ comment.body }}</p>
-          <p>Comment by {{ comment.author.username }}, {{ comment.created }}</p>
+          <div class="comment">
+            <p class="comment-author">{{ comment.author.username }} <span class="comment-created-at">&#8226; {{ comment.created }}</span></p>
+            <p class="comment-body">{{ comment.body }}</p>
+          </div>
         {% empty %}
-          <hr>
           <p>There are no comments yet!</p>
         {% endfor %}
       {% endwith %}
