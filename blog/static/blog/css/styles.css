@@ -312,10 +312,8 @@ ul.pagination li span {
 }
 
 .comment {
-    border: 1px solid lightgrey;
-    border-radius: 5px;
     padding: 15px;
-    margin: 0 0 25px 0;
+    margin: 0 0 15px 0;
 }
 
 .comment:last-child {
@@ -342,9 +340,7 @@ ul.pagination li span {
 .post-detail-title-wrapper {
     margin-top: 40px;
     padding: 0;
-    /*text-align: center;*/
     display: flex;
-    /*align-content: center;*/
     justify-content: space-between;
     align-items: center;
 }
@@ -352,6 +348,10 @@ ul.pagination li span {
 .post-detail-written-by {
     font-style: italic;
     color: darkgray;
+}
+
+.post-detail-body {
+    margin-bottom: 30px;
 }
 
 .add-remove-bookmark-icon {
@@ -362,4 +362,37 @@ ul.pagination li span {
     display: flex;
     column-gap: 5px;
     justify-content: right;
+}
+
+.comment-form {
+    display: inline;
+    outline: none;
+    width: 100%;
+    min-height: 70px;
+    height: 70px;
+    padding: 15px;
+    border-radius: 5px;
+    border-color: lightgrey;
+    box-shadow: 4px 4px 0 -1px lightgrey;
+    margin-bottom: 7px;
+    resize: vertical;
+}
+
+.comment-form::placeholder {
+    color: lightgrey;
+}
+
+.comment-form:focus {
+    border-color: black;
+}
+
+.comment-form-btn {
+    border: lightgrey 1px solid;
+    border-radius: 3px;
+    padding: 7px;
+    margin: 0 0 20px 0;
+}
+
+.comment-form-btn:hover {
+    background-color: #E8E8E8;
 }
