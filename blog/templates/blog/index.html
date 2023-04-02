@@ -3,42 +3,25 @@
 
 {% block content %}
 
-  {#  {% include "blog/includes/banner.html" %}#}
-  <div class="banner-wrapper">
-    <div class="banner">
-      <div class="banner-text">
-        <h1 class="banner-text-title">MUG. Stay curious.</h1>
-        <p class="banner-text-body">Discover stories from writers on any topic.</p>
-        {% if not user.is_authenticated %}
-          <a href="{% url 'blog:registration' %}" class="banner-btn">Start reading</a>
-        {% else %}
-          <a href="{% url 'blog:post-create' %}" class="banner-btn">Start writing</a>
-        {% endif %}
-      </div>
-      <div class="banner-img">
-        {% load static %}
-        <img src="{% static 'blog/img/undraw_people_re_8spw.svg' %}" alt="My image" height="300">
-      </div>
-    </div>
-  </div>
+  {% include "blog/includes/banner.html" %}
+
   <div class="content-with-sidebar-wrapper">
     <div class="content-with-sidebar">
+      <div class="post-container">
+        {% for post in posts %}
+          <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
+            <div class="post">
+              <h2>
+                {{ post.title }}
+              </h2>
 
-      {% for post in posts %}
-        <a href="{% url 'blog:post-detail' post_slug=post.slug %}">
-          <div class="post">
-            <h2>
-              {{ post.title }}
-            </h2>
-
-            <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
-            <p>{{ post.body|truncatewords:30 }}</p>
-          </div>
-        </a>
-
-      {% endfor %}
+              <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
+              <p class="post-body">{{ post.body|truncatewords:30 }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
       {% include "blog/includes/pagination.html" with page=posts %}
-
     </div>
     {% include "blog/includes/sidebar.html" %}
   </div>

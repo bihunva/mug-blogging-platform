@@ -1,0 +1,49 @@
+<div class="banner-hide">
+  <span class="banner-hide-btn" id="banner-hide-btn" title="show / hide banner">-</span>
+</div>
+
+<div class="banner-wrapper" id="banner-wrapper">
+  <div class="banner">
+    <div class="banner-text">
+      <h1 class="banner-text-title">MUG. Stay curious.</h1>
+      <p class="banner-text-body">Discover stories from writers on any topic.</p>
+      {% if not user.is_authenticated %}
+        <a href="{% url 'blog:registration' %}" class="banner-btn">Start reading</a>
+      {% else %}
+        <a href="{% url 'blog:post-create' %}" class="banner-btn">Start writing</a>
+      {% endif %}
+    </div>
+    <div class="banner-img">
+      {% load static %}
+      <img src="{% static 'blog/img/undraw_people_re_8spw.svg' %}" alt="My image" height="300">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const button = document.querySelector('#banner-hide-btn');
+  const banner = document.querySelector('#banner-wrapper');
+
+  let isBannerVisible = localStorage.getItem('isBannerVisible') !== 'false';
+
+  if (!isBannerVisible) {
+    banner.style.display = 'none';
+    button.textContent = '-';
+  }
+
+  function toggleBanner() {
+    if (isBannerVisible) {
+      banner.style.display = 'none'; // ховаємо банер
+      button.textContent = '-'; // змінюємо текст кнопки
+    } else {
+      banner.style.display = 'block'; // показуємо банер
+      button.textContent = '-'; // змінюємо текст кнопки
+    }
+    isBannerVisible = !isBannerVisible; // змінюємо стан банера
+
+    localStorage.setItem('isBannerVisible', isBannerVisible);
+  }
+
+  button.addEventListener('click', toggleBanner);
+</script>
