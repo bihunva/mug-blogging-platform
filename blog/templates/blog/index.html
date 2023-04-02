@@ -14,7 +14,6 @@
               <h2>
                 {{ post.title }}
               </h2>
-
               <p class="written-by">Written by {{ post.author.username }}, {{ post.created|date:"F d, Y" }}</p>
               <p class="post-body">{{ post.body|truncatewords:30 }}</p>
             </div>

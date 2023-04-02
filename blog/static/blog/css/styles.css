@@ -16,6 +16,8 @@ ul {
     list-style: none;
 }
 
+
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -384,15 +386,34 @@ ul.pagination li span {
 
 .comment-form:focus {
     border-color: black;
+    background-color: lightgoldenrodyellow;
 }
 
 .comment-form-btn {
     border: lightgrey 1px solid;
     border-radius: 3px;
-    padding: 7px;
+    padding: 9px;
     margin: 0 0 20px 0;
+    background-color: lightgoldenrodyellow;
 }
 
 .comment-form-btn:hover {
-    background-color: #E8E8E8;
+    /*background-color: #E8E8E8;*/
+    border-color: black;
+}
+
+.remove-from-saved-icon {
+    float: right;
+}
+
+.remove-from-saved-icon:hover {
+    color: lightseagreen;
+}
+
+.remove-from-saved-icon:hover .post:hover {
+    background-color: black;
+}
+
+.saved-page-title {
+    margin-top: 40px;
 }

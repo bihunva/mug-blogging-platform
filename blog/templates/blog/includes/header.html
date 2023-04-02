@@ -8,15 +8,36 @@
       <div class="logo">
         <a href="{% url "blog:index" %}"><img src="{% static 'blog/img/logo.png' %}" alt="logo"></a>
       </div>
-        {% search_form %}
+      {% search_form %}
     </div>
     <nav>
       <ul>
         {% if user.is_authenticated %}
-          <li><a href="{% url 'blog:post-create' %}"><img class="icon" src="{% static 'blog/img/write.png' %}" alt="write"></a></li>
-          <li><a href="{% url 'blog:saved-posts' %}"><img class="icon bookmark-header-icon" src="{% static 'blog/img/bookmark.png' %}" alt="bookmark"></a></li>
-{#          <li>hi, {{ user.username }}</li>#}
-          <li><a href="{% url 'logout' %}"><img class="icon" src="{% static 'blog/img/sign-out-alt.png' %}" alt="logout"></a></li>
+          <li>
+            <a href="{% url 'blog:post-create' %}">
+              <img class="icon"
+                   src="{% static 'blog/img/write.png' %}"
+                   alt="write"
+
+                   title="write post">
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'blog:saved-posts' %}">
+              <img class="icon bookmark-header-icon"
+                   src="{% static 'blog/img/bookmark.png' %}"
+                   alt="bookmark"
+                   title="saved posts">
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}">
+              <img class="icon"
+                   src="{% static 'blog/img/sign-out-alt.png' %}"
+                   alt="logout"
+                   title="sign out">
+            </a>
+          </li>
         {% else %}
           <li><a href="{% url 'login' %}">Sign in</a></li>
         {% endif %}
@@ -24,4 +45,3 @@
     </nav>
   </header>
 </div>
-
