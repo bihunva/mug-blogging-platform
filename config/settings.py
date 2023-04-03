@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "taggit",
     "widget_tweaks",
     "django_summernote",
-    "debug_toolbar",
+    # "debug_toolbar",
 ]
 
 MIDDLEWARE = [

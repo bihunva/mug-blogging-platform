@@ -4,7 +4,7 @@ Broadcast-style communications systems that enable authors to publish articles.
 
 ## Check it out!
 
-[MUG project deployed to Render](PASTE LINK HERE)
+[MUG project deployed to Render](https://mug-91nk.onrender.com/)
 
 ```shell
 git clone https://github.com/bihunva/mug-blogging-platform
