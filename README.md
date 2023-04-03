@@ -21,6 +21,14 @@ python manage.py runserver
 * Ability to add/remove posts to/from saved
 * Registered users can publish their own posts
 
+
+## Test user credentials:
+
+```
+username: testuser
+password: user12345
+```
+
 ## Demo
 
 ![Website Interface](demo.png)
