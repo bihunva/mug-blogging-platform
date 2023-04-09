@@ -22,45 +22,6 @@ class PostListView(generic.ListView):
         return super().get_queryset().select_related("author").prefetch_related("tags")
 
 
-class SearchListView(generic.ListView):
-    model = Post
-    template_name = "blog/search_list.html"
-    context_object_name = "search_results"
-    paginate_by = 6
-
-    def get_queryset(self):
-        query = self.request.GET.get("query")
-
-        if not query:
-            return self.model.objects.none()
-
-        return self.model.objects.filter(title__icontains=query).select_related("author")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["found_number"] = self.object_list.count()
-
-        return context
-
-
-class RegistrationView(generic.View):
-    def get(self, request, *args, **kwargs):
-        register_form = UserRegisterForm()
-        context = {"register_form": register_form}
-        return render(request, "blog/registration.html", context=context)
-
-    def post(self, request, *args, **kwargs):
-        register_form = UserRegisterForm(request.POST)
-
-        if register_form.is_valid():
-            user = register_form.save()
-            login(request, user)
-            return redirect("blog:index")
-
-        context = {"register_form": register_form}
-        return render(request, "blog/registration.html", context=context)
-
-
 class PostDetailView(generic.View):
     template_name = "blog/post_detail.html"
 
@@ -115,23 +76,56 @@ class SavedPostListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
+class SearchListView(generic.ListView):
+    model = Post
+    template_name = "blog/search_list.html"
+    context_object_name = "search_results"
+    paginate_by = 6
+
+    def get_queryset(self):
+        query = self.request.GET.get("query")
+
+        if not query:
+            return self.model.objects.none()
+
+        return self.model.objects.filter(title__icontains=query).select_related("author")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["found_number"] = self.object_list.count()
+
+        return context
+
+
+class RegistrationView(generic.View):
+    def get(self, request, *args, **kwargs):
+        register_form = UserRegisterForm()
+        context = {"register_form": register_form}
+        return render(request, "blog/registration.html", context=context)
+
+    def post(self, request, *args, **kwargs):
+        register_form = UserRegisterForm(request.POST)
+
+        if register_form.is_valid():
+            user = register_form.save()
+            login(request, user)
+            return redirect("blog:index")
+
+        context = {"register_form": register_form}
+        return render(request, "blog/registration.html", context=context)
+
+
 @login_required
-def add_post_to_saved(request, post_slug: str) -> HttpResponse:
+def add_remove_post_from_saved(request, post_slug: str, already_added: bool) -> HttpResponse:
     post = get_object_or_404(Post, slug=post_slug)
     user = get_user_model().objects.get(id=request.user.id)
-    user.saved_posts.add(post)
+
+    if already_added:
+        user.saved_posts.add(post)
+    else:
+        user.saved_posts.remove(post)
+
     user.save()
-
-    return redirect(request.META.get("HTTP_REFERER", ""))
-
-
-@login_required
-def remove_post_from_saved(request, post_slug: str) -> HttpResponse:
-    post = get_object_or_404(Post, slug=post_slug)
-    user = get_user_model().objects.get(id=request.user.id)
-    user.saved_posts.remove(post)
-    user.save()
-
     return redirect(request.META.get("HTTP_REFERER", ""))
 
 

@@ -11,7 +11,7 @@
           {% if authenticated %}
             {% if post in user.saved_posts.all %}
               <a class="add-remove-bookmark-icon"
-                 href="{% url 'blog:remove-post-from-saved' post_slug=post.slug %}">
+                 href="{% url 'blog:add_remove_post' post_slug=post.slug already_added=0 %}">
                 <img class="icon bookmark-header-icon"
                      src="{% static 'blog/img/bookmark_filled.png' %}"
                      alt="bookmark"
@@ -19,7 +19,7 @@
               </a>
             {% else %}
               <a class="add-remove-bookmark-icon"
-                 href="{% url 'blog:add-post-to-saved' post_slug=post.slug %}">
+                 href="{% url 'blog:add_remove_post' post_slug=post.slug already_added=1 %}">
                 <img class="icon bookmark-header-icon"
                      src="{% static 'blog/img/bookmark.png' %}"
                      alt="bookmark"

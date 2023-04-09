@@ -12,7 +12,7 @@
               {{ saved_post.title }}
               <object type="text">
                 <a class="remove-from-saved-icon"
-                   href="{% url 'blog:remove-post-from-saved' post_slug=saved_post.slug %}">
+                   href="{% url 'blog:add_remove_post' post_slug=saved_post.slug already_added=0%}">
                   &#10005;
                 </a>
               </object>
