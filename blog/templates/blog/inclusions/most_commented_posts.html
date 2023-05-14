@@ -1,0 +1,10 @@
+{% for post in most_commented_posts %}
+  {% with post as p %}
+    <div class="sidebar-post">
+      <a href="{% url 'blog:post-detail' post_slug=p.slug %}">
+        <p class="written-by">{{ p.author.username }}, {{ p.created|date:"F d" }}</p>
+        <h5 class="sidebar-post-title">{{ p.title }}</h5>
+      </a>
+    </div>
+  {% endwith %}
+{% endfor %}

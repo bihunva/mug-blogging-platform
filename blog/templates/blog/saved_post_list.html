@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="content-with-sidebar-wrapper">
+    <div class="content-with-sidebar">
+      <h1 class="saved-page-title">Your saved posts</h1>
+      {% for saved_post in saved_posts.all %}
+        <a href="{{ saved_post.get_absolute_url }}">
+          <div class="post">
+            <h2>
+              {{ saved_post.title }}
+              <object type="text">
+                <a class="remove-from-saved-icon"
+                   href="{% url 'blog:add_remove_post' post_slug=saved_post.slug already_added=0%}">
+                  &#10005;
+                </a>
+              </object>
+            </h2>
+            <p class="written-by">
+              Written by {{ saved_post.author.username }}, {{ saved_post.created|date:"F d, Y" }}
+            </p>
+            <p class="post-body">{{ saved_post.body|truncatewords:30|safe }}</p>
+          </div>
+        </a>
+      {% empty %}
+        <p>You don't have any saved posts yet!</p>
+      {% endfor %}
+    </div>
+    {% include "blog/includes/sidebar.html" %}
+  </div>
+{% endblock %}

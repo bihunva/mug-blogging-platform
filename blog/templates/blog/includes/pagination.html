@@ -1,0 +1,26 @@
+{% load static %}
+{% load query_transform %}
+
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li>
+        <a href="?{% query_transform request page=page_obj.previous_page_number %}">
+          <img class="icon" src="{% static 'blog/img/angle-small-left.png' %}" alt="left-angle">
+        </a>
+      </li>
+    {% endif %}
+
+    <li>
+      <span>{{ page_obj.number }}</span>
+    </li>
+
+    {% if page_obj.has_next %}
+      <li>
+        <a href="?{% query_transform request page=page_obj.next_page_number %}">
+          <img class="icon" src="{% static 'blog/img/angle-small-right.png' %}" alt="left-angle">
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+{% endif %}

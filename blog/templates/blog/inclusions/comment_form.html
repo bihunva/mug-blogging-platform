@@ -1,0 +1,7 @@
+{% load widget_tweaks %}
+
+<form action="{% url 'blog:post-detail' post_slug=post.slug %}" method="post" novalidate>
+  {% csrf_token %}
+  {% render_field form.body|add_class:"comment-form" placeholder="Leave your comment.." %}
+  <input class="comment-form-btn" type="submit" value="Add comment">
+</form>

@@ -1,0 +1,14 @@
+{% load post_tags %}
+
+<div class="sidebar">
+  <div class="sidebar-section">
+    <h3 class="sidebar-section-title">Latest</h3>
+    {% show_latest_posts 3 %}
+  </div>
+
+  <div class="sidebar-section">
+    <h3 class="sidebar-section-title">Popular</h3>
+    {% show_most_commented_posts %}
+  </div>
+  {% show_tags %}
+</div>

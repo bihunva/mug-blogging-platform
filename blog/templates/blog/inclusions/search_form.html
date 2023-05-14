@@ -1,0 +1,5 @@
+{% load static %}
+
+<form action="{% url 'blog:search' %}" method="get" novalidate>
+  {{ form.as_p }}
+</form>
